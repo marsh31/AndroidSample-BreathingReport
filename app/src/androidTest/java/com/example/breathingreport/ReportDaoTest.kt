@@ -1,24 +1,27 @@
 package com.example.breathingreport
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.breathingreport.utilities.toDate
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 class ReportDaoTest {
     private lateinit var target: ReportDao
     private lateinit var database: AppDatabase
 
-    private val reportA = Report(1, "2022-01-01", 20)
-    private val reportB = Report(2, "2022-01-02", 22)
-    private val reportC = Report(3, "2022-01-03", 21)
+    private val reportA = Report(1, "2022-01-01".toDate("yyyy-MM-dd")!!, 20)
+    private val reportB = Report(2, "2022-01-02".toDate("yyyy-MM-dd")!!, 22)
+    private val reportC = Report(3, "2022-01-03".toDate("yyyy-MM-dd")!!, 21)
 
     @Before
     fun setup() = runBlocking {
@@ -38,6 +41,7 @@ class ReportDaoTest {
     @Test
     fun getAllTest() = runBlocking {
         val reports = target.getAll()
+
         assert(reportA == reports[0])
         assert(reportB == reports[1])
         assert(reportC == reports[2])
@@ -51,14 +55,8 @@ class ReportDaoTest {
     }
 
     @Test
-    fun findByDateTest() = runBlocking {
-        val report = target.findByDate("2022-01-02")
-        assert(reportB == report)
-    }
-
-    @Test
     fun insertAllTest() = runBlocking {
-        val report: Report = Report(0, "2020-02-04", 20)
+        val report: Report = Report(0, "2020-02-04".toDate("yyyy-MM-dd")!!, 20)
         target.insertAll(report)
 
         val reports = target.getAll()

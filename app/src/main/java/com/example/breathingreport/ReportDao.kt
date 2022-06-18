@@ -1,4 +1,9 @@
 package com.example.breathingreport
+/* NOTE:
+ * Test&Debug:
+ * https://developer.android.com/training/data-storage/room/testing-db?hl=ja
+ */
+
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -12,9 +17,6 @@ interface ReportDao {
 
     @Query("SELECT * FROM report WHERE uid IN (:reportIds)")
     suspend fun loadAllByIds(reportIds: IntArray): List<Report>
-
-    @Query("SELECT * FROM report WHERE date LIKE :date")
-    suspend fun findByDate(date: String): Report
 
     @Insert
     suspend fun insertAll(vararg reports: Report)
