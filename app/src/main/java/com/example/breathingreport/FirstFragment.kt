@@ -44,10 +44,6 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-
-        binding.testBtn.setOnClickListener {
-            sampleCodeUsingDB()
-        }
     }
 
     override fun onDestroyView() {
@@ -55,20 +51,5 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 
-    private fun sampleCodeUsingDB() {
-        Log.d(TAG, "test button clicked")
-        val dao = database.reportDao()
-
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Default) {
-                val pre_data = dao.getAll()
-                dao.insertAll(Report(pre_data.size, "2022-05-30", 20 + pre_data.size))
-
-                dao.getAll().forEach {
-                    Log.d(TAG, "> ${it.uid}, ${it.date}, ${it.bold}")
-                }
-            }
-        }
-    }
 
 }
