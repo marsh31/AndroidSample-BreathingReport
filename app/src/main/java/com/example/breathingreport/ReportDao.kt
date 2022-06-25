@@ -13,14 +13,14 @@ import androidx.room.Query
 @Dao
 interface ReportDao {
     @Query("SELECT * FROM report")
-    suspend fun getAll(): List<Report>
+    fun getAll(): List<Report>
 
     @Query("SELECT * FROM report WHERE uid IN (:reportIds)")
-    suspend fun loadAllByIds(reportIds: IntArray): List<Report>
+    fun loadAllByIds(reportIds: IntArray): List<Report>
 
     @Insert
-    suspend fun insertAll(vararg reports: Report)
+    fun insertAll(vararg reports: Report)
 
     @Delete
-    suspend fun delete(report: Report)
+    fun delete(report: Report)
 }
